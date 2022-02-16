@@ -1,2 +1,2 @@
-# vue-components
-Vue components archive
+# quasar-components
+Quasar components archive
