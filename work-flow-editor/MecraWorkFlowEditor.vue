@@ -8,7 +8,7 @@
       :title="flowStep.title"
       :icon="flowStep.icon"
       :color="flowStep.color"
-      @click="getStepExtraDetails"
+      @click="getStepDetail(flowStep)"
     >
       <div>{{ flowStep.id }} {{ flowStep.body }}</div>
       <q-timeline v-if="lenSubSteps(flowStep.id) > 0" style="margin: 50px 0 0 33px">
@@ -18,7 +18,7 @@
           :title="first.title"
           :icon="first.icon"
           :color="first.color"
-          @click="getStepExtraDetails"
+          @click="getStepDetail(first)"
         >
           <div>{{ first.id }} {{ first.body }}</div>
           <q-timeline v-if="lenSubSteps(first.id) > 0" style="margin: 50px 0 0 33px">
@@ -28,7 +28,7 @@
               :title="second.title"
               :icon="second.icon"
               :color="second.color"
-              @click="getStepExtraDetails"
+              @click="getStepDetail(second)"
             >
               <div>{{ second.id }} {{ second.body }}</div>
             </q-timeline-entry>
@@ -46,28 +46,28 @@ export default defineComponent({
       type: Object,
       default: () => {},
     },
+    getStepDetail: {
+      type: Function,
+      default: () => (step) => {
+        console.log("getStepDetail callback function not configured", step);
+      },
+    },
   },
   setup(props) {
-    console.log(props);
-    const getStepExtraDetails = (step) => {
-      console.log("getStepExtraDetails", step);
-    };
     const lenSubSteps = (parentId) => {
-      const steps = props.flowData.steps.filter(function (step) {
+      const steps = props.flowData.steps.filter((step) => {
         return step.parentId === parentId;
       });
       return steps.length;
     };
     const getSteps = (parentId) => {
-      console.log("getSteps", parentId);
-      return props.flowData.steps.filter(function (step) {
+      return props.flowData.steps.filter((step) => {
         return step.parentId === parentId;
       });
     };
     return {
       getSteps,
       lenSubSteps,
-      getStepExtraDetails,
     };
   },
 });
